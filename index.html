@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>半托管男装常用处理表格</title>
+<style>
+:root {
+  --bg: #f0f4f8;
+  --card-bg: #ffffff;
+  --primary: #1e3a5f;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --accent-dark: #1d4ed8;
+  --accent-grad: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  --border: #bfdbfe;
+  --border-light: #e0e7ff;
+  --required: #fef3c7;
+  --required-border: #f59e0b;
+  --text-muted: #64748b;
+  --text-light: #475569;
+  --shadow: 0 1px 3px rgba(37,99,235,0.04), 0 1px 2px rgba(37,99,235,0.03);
+  --danger: #ef4444;
+  --success: #10b981;
+  --info: #0ea5e9;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #64748b;
+  --sidebar-active: #2563eb;
+  --sidebar-active-bg: #eff6ff;
+  --sidebar-border: #e0e7ff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif; background: var(--bg); color: var(--primary); line-height: 1.6; min-height: 100vh; }
+.header { background: var(--card-bg); border-bottom: 2px solid var(--accent); padding: 18px 30px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(37,99,235,0.08); }
+.header h1 { font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: 0.5px; }
+.header .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+.guide-download-btn { display: flex; align-items: center; gap: 8px; background: var(--accent-grad); color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; position: relative; flex-shrink: 0; transition: all 0.2s; box-shadow: 0 2px 8px rgba(37,99,235,0.3); }
+.guide-download-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,99,235,0.4); }
+.guide-download-btn::before { content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 10px; border: 2px solid var(--accent); animation: pulseRing 1.8s ease-out infinite; }
+.guide-download-btn::after { content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border-radius: 12px; border: 2px solid var(--accent); animation: pulseRing 1.8s ease-out 0.4s infinite; }
+@keyframes pulseRing { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.15); opacity: 0; } }
+.guide-download-btn .arrow-bounce { display: inline-block; animation: arrowBounce 1s ease-in-out infinite; }
+@keyframes arrowBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+.quick-download.highlight { animation: highlightFlash 0.6s ease 3; }
+@keyframes highlightFlash { 0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); } 50% { box-shadow: 0 0 0 4px rgba(37,99,235,0.4); } }
+.layout { display: flex; min-height: calc(100vh - 64px); }
+.sidebar { width: 240px; background: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border); padding: 12px 0; flex-shrink: 0; position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; }
+.nav-section-title { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; padding: 12px 20px 6px; font-weight: 600; }
+.nav-item { display: flex; align-items: center; padding: 11px 20px; cursor: pointer; transition: all 0.15s ease; border-left: 3px solid transparent; font-size: 13.5px; color: var(--sidebar-text); gap: 10px; }
+.nav-item:hover { background: var(--accent-light); color: var(--accent); }
+.nav-item.active { background: var(--sidebar-active-bg); border-left-color: var(--sidebar-active); color: var(--sidebar-active); font-weight: 600; }
+.nav-item .nav-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.nav-item.active .nav-num { background: var(--accent); color: #fff; }
+.content { flex: 1; padding: 24px 28px; overflow-x: hidden; }
+.module { display: none; animation: fadeIn 0.3s ease; }
+.module.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.module-header { margin-bottom: 20px; }
+.module-header h2 { font-size: 19px; font-weight: 700; color: var(--accent); margin-bottom: 5px; }
+.module-header .module-desc { font-size: 13px; color: var(--text-muted); }
+.info-card { background: var(--card-bg); border-radius: 8px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid var(--border-light); box-shadow: var(--shadow); }
+.info-card h3 { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.info-card h3::before { content: ''; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; }
+.notice-list { list-style: none; padding: 0; }
+.notice-list li { padding: 8px 0; font-size: 13.5px; color: var(--text-light); display: flex; align-items: flex-start; gap: 8px; line-height: 1.7; }
+.notice-list li::before { content: '\25B8'; color: var(--accent); font-weight: bold; flex-shrink: 0; margin-top: 1px; }
+.notice-list li.warning { color: var(--danger); }
+.notice-list li.warning::before { content: '\26A0'; color: var(--danger); }
+.notice-list li.info { color: var(--info); }
+.notice-list li.info::before { content: '\2139'; color: var(--info); }
+.table-wrapper { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border-light); }
+table.template-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.template-table th { background: var(--accent-light); color: var(--accent-dark); padding: 9px 14px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--accent); white-space: nowrap; font-size: 12.5px; }
+table.template-table th.required { background: var(--required); border-bottom: 2px solid var(--required-border); color: #92400e; }
+table.template-table th.required::after { content: ' *'; color: var(--danger); }
+table.template-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-light); color: var(--text-light); vertical-align: top; }
+table.template-table tr:last-child td { border-bottom: none; }
+table.template-table tr:hover td { background: #f8fafc; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+.tag-required { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+.tag-optional { background: #e0e7ff; color: #3730a3; border: 1px solid #a5b4fc; }
+.example-box { background: #f0f4f8; border: 1px solid var(--border-light); border-left: 3px solid var(--accent); border-radius: 6px; padding: 14px 18px; margin: 10px 0; font-size: 13px; color: var(--text-light); line-height: 1.8; }
+.example-box .example-title { font-weight: 700; color: var(--accent); margin-bottom: 6px; font-size: 13px; }
+.dropdown-options { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.dropdown-options .option-tag { display: inline-block; padding: 3px 10px; background: var(--accent-light); border: 1px solid var(--border); border-radius: 4px; font-size: 12px; color: var(--accent-dark); }
+.requirement-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-top: 10px; }
+.requirement-card { background: #f0f4f8; border: 1px solid var(--border-light); border-radius: 8px; padding: 14px 16px; }
+.requirement-card .req-title { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+.requirement-card .req-value { font-size: 15px; color: var(--accent); font-weight: 700; }
+.summary-bar { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.summary-chip { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 14px; font-size: 12.5px; color: var(--text-light); display: flex; align-items: center; gap: 6px; }
+.summary-chip .chip-num { background: var(--accent); color: #fff; border-radius: 4px; width: 22px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.download-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-grad); color: #fff; border: none; border-radius: 6px; padding: 10px 22px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; box-shadow: 0 2px 6px rgba(37,99,235,0.2); }
+.download-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,0.35); }
+.download-btn:active { transform: translateY(0); }
+.download-section { text-align: center; padding: 16px 0 8px; }
+.download-hint { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+.module-header-download { display: flex; align-items: center; gap: 6px; background: var(--accent-grad); color: #fff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; box-shadow: 0 2px 6px rgba(37,99,235,0.25); flex-shrink: 0; }
+.module-header-download:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(37,99,235,0.35); }
+.module-header-download .dl-icon { display: inline-block; animation: arrowBounce 1s ease-in-out infinite; }
+.download-arrow { text-align: center; margin-bottom: 4px; }
+.dimension-switcher { display: flex; align-items: center; gap: 6px; }
+.dim-btn { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 6px; background: #fff; color: var(--text-muted); font-size: 12.5px; cursor: pointer; transition: all 0.15s ease; font-weight: 500; }
+.dim-btn:hover { border-color: var(--accent); color: var(--accent); }
+.dim-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.dim-dl-btn { padding: 6px 14px; border: none; border-radius: 6px; background: var(--accent-grad); color: #fff; font-size: 12.5px; cursor: pointer; font-weight: 600; transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(37,99,235,0.25); }
+.dim-dl-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(37,99,235,0.35); }
+.qd-expand { grid-column: 1 / -1; display: flex; gap: 10px; justify-content: center; padding: 4px 0 8px; }
+.qd-sub-btn { padding: 8px 20px; border: 1.5px solid var(--accent); border-radius: 8px; background: var(--accent-light); color: var(--accent); font-size: 13px; cursor: pointer; font-weight: 600; transition: all 0.15s ease; }
+.qd-sub-btn:hover { background: var(--accent); color: #fff; }
+.download-arrow .arrow-icon { display: inline-block; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 16px solid var(--accent); animation: arrowPulse 1.2s ease-in-out infinite; filter: drop-shadow(0 2px 4px rgba(37,99,235,0.3)); }
+@keyframes arrowPulse { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(8px); opacity: 0.5; } }
+.download-arrow .arrow-label { display: block; font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 4px; animation: arrowLabelPulse 1.2s ease-in-out infinite; }
+@keyframes arrowLabelPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.quick-download { background: var(--accent-grad); border-radius: 10px; padding: 22px 26px; margin-bottom: 20px; border: 1px solid var(--accent); box-shadow: 0 4px 14px rgba(37,99,235,0.15); }
+.quick-download .qd-title { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.quick-download .qd-desc { color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 14px; }
+.quick-download .qd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.quick-download .qd-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 14px 14px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; text-align: center; }
+.quick-download .qd-btn:hover { background: #fff; color: var(--accent); border-color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.quick-download .qd-btn .qd-dl-icon { font-size: 20px; font-weight: 700; display: block; animation: arrowBounce 1s ease-in-out infinite; }
+.quick-download .qd-btn .qd-btn-label { font-size: 13.5px; font-weight: 700; display: block; }
+.quick-download .qd-btn .qd-btn-sub { font-size: 11px; opacity: 0.7; display: block; }
+@media (max-width: 768px) { .layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; top: 0; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; white-space: nowrap; padding: 10px; } .nav-section-title { display: inline-block; padding: 10px; } .nav-item { display: inline-flex; padding: 8px 14px; border-left: none; border-bottom: 3px solid transparent; white-space: nowrap; } .nav-item.active { border-left: none; border-bottom-color: var(--accent); } .content { padding: 16px; } .header { padding: 14px 16px; flex-wrap: wrap; } .header h1 { font-size: 18px; } .guide-download-btn { padding: 8px 14px; font-size: 12px; } .guide-download-btn::before, .guide-download-btn::after { display: none; } .download-arrow { display: none; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div><h1>半托管男装常用处理表格</h1><div class="subtitle">核价申诉 / 灰名单申诉 / 二次核价申诉 / 商品上下架 / 市场推广提报</div></div>
+  <button class="guide-download-btn" onclick="scrollToDownload()">下载模板<span class="arrow-bounce">v</span></button>
+</div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="nav-section-title">表格导航</div>
+    <div class="nav-item active" data-target="m1"><span class="nav-num">1</span><span>核价申诉</span></div>
+    <div class="nav-item" data-target="m2"><span class="nav-num">2</span><span>灰名单申诉</span></div>
+    <div class="nav-item" data-target="m3"><span class="nav-num">3</span><span>二次核价申诉</span></div>
+    <div class="nav-item" data-target="m4"><span class="nav-num">4</span><span>商品上下架</span></div>
+    <div class="nav-item" data-target="m5"><span class="nav-num">5</span><span>市场推广提报</span></div>
+  </div>
+  <div class="content">
+    <div class="quick-download">
+      <div class="qd-title">模板下载（点击直接下载Excel）</div>
+      <div class="qd-desc">所有模板含标准表头、标黄必填项、下拉框验证，下载后直接填写数据即可使用</div>
+      <div class="qd-grid">
+        <button class="qd-btn" onclick="toggleQdExpand('qd-expand-1')"><span class="qd-dl-icon">↓</span><span class="qd-btn-label">核价申诉模板</span><span class="qd-btn-sub">点击选择</span></button>
+        <div class="qd-expand" id="qd-expand-1" style="display:none;">
+          <button class="qd-sub-btn" onclick="downloadTemplate('price_appeal_skc')">SKC维度模板（推荐）</button>
+          <button class="qd-sub-btn" onclick="downloadTemplate('price_appeal')">SKU维度模板</button>
+        </div>
+        <button class="qd-btn" onclick="downloadTemplate('greylist_appeal')"><span class="qd-dl-icon">↓</span><span class="qd-btn-label">灰名单申诉模板</span><span class="qd-btn-sub">点击下载</span></button>
+        <button class="qd-btn" onclick="downloadTemplate('recheck_appeal')"><span class="qd-dl-icon">↓</span><span class="qd-btn-label">二次核价申诉模板</span><span class="qd-btn-sub">点击下载</span></button>
+        <button class="qd-btn" onclick="downloadTemplate('shelf_on')"><span class="qd-dl-icon">↓</span><span class="qd-btn-label">上架模板</span><span class="qd-btn-sub">点击下载</span></button>
+        <button class="qd-btn" onclick="downloadTemplate('shelf_off')"><span class="qd-dl-icon">↓</span><span class="qd-btn-label">下架模板</span><span class="qd-btn-sub">点击下载</span></button>
+        <button class="qd-btn" onclick="downloadTemplate('market_promo')"><span class="qd-dl-icon">↓</span><span class="qd-btn-label">市场推广提报模板</span><span class="qd-btn-sub">点击下载</span></button>
+      </div>
+    </div>
+
+    <div class="module active" id="m1">
+      <div class="module-header"><h2>核价申诉模板</h2>
+        <div class="dimension-switcher">
+          <button class="dim-btn active" onclick="switchDimension('m1','skc')">SKC维度 <span style="font-size:10px;background:#dbeafe;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:2px;vertical-align:middle;">推荐</span></button>
+          <button class="dim-btn" onclick="switchDimension('m1','sku')">SKU维度</button>
+          <button class="dim-dl-btn" onclick="downloadTemplate('price_appeal_skc')">下载SKC模板</button>
+          <button class="dim-dl-btn" onclick="downloadTemplate('price_appeal')">下载SKU模板</button>
+        </div>
+      </div>
+      <div class="module-desc">申请重新核价 — 适用于核价中且已出价后对出价不满意的情况。支持SKU维度和SKC维度两种模板</div>
+      <div class="summary-bar"><div class="summary-chip"><span class="chip-num">11</span> 列字段</div><div class="summary-chip"><span class="chip-num">5</span> 必填项</div><div class="summary-chip"><span class="chip-num">1000</span> 条/表上限</div><div class="summary-chip" style="background:var(--accent-light);color:var(--accent);"><span class="chip-num" id="m1-dim-label">SKU</span> 当前维度</div></div>
+      <div class="info-card">
+        <h3>表格字段结构 <span id="m1-table-title" style="font-size:13px;color:var(--accent);font-weight:500;">（SKC维度）</span></h3>
+        <div class="table-wrapper" id="m1-table-sku" style="display:none;"><table class="template-table"><thead><tr><th>列</th><th class="required">SKUID</th><th class="required">是否泛欧品</th><th class="required">站点</th><th>申诉依据</th><th>竞品平台</th><th>竞品ID类型</th><th>竞品ID</th><th>竞品链接</th><th>相似款链接</th><th class="required">申诉价格</th><th class="required">申诉内容</th></tr></thead><tbody>
+        <tr><td>说明</td><td>货品SKU ID</td><td>默认"否"</td><td>如"美国站"</td><td>如"成本拆解"</td><td>如bg/pdd/walmart等</td><td>如商品SPU id/SKC id等</td><td>竞品ID</td><td>URL链接</td><td>URL链接</td><td>纯数字，保留两位小数</td><td>成本拆解详情</td></tr>
+        <tr><td>必填</td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td></tr>
+        </tbody></table></div>
+        <div class="table-wrapper" id="m1-table-skc"><table class="template-table"><thead><tr><th>列</th><th class="required">SKCID</th><th class="required">是否泛欧品</th><th class="required">站点</th><th>申诉依据</th><th>竞品平台</th><th>竞品ID类型</th><th>竞品ID</th><th>竞品链接</th><th>相似款链接</th><th class="required">申诉价格</th><th class="required">申诉内容</th></tr></thead><tbody>
+        <tr><td>说明</td><td>货品SKC ID</td><td>默认"否"</td><td>如"美国站"</td><td>如"成本拆解"</td><td>如bg/pdd/walmart等</td><td>如商品SPU id/SKC id等</td><td>竞品ID</td><td>URL链接</td><td>URL链接</td><td>纯数字，保留两位小数</td><td>成本拆解详情</td></tr>
+        <tr><td>必填</td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="info-card"><h3>注意事项</h3><ul class="notice-list">
+        <li class="warning">只有<strong>核价中且已经出价后出价不满意</strong>的填写此表议价，未出价格/已通过核价的状态填写均无法产生效果</li>
+        <li class="warning">不要改表头格式与内容，否则导致系统无法识别整表</li>
+        <li>超过1000个SKC需要分表填写，一张表最多填1000个SKC</li>
+        <li>站点统一写：美国站；拉美站点写"哥伦比亚""秘鲁""厄瓜多尔"；其余站点议价均为"XX站"</li>
+        <li>目标价格保留两位小数，纯数字，不要写货币符号</li>
+        <li class="info">标黄的为必填项</li>
+      </ul></div>
+      <div class="info-card"><h3>申诉内容填写要求</h3>
+        <p style="font-size:13.5px;color:var(--text-light);margin-bottom:8px;">申诉内容必须填写完善，请填写<strong>成本拆解</strong>，包括但不限于：商品成本、头程运费、仓储费、尾程运费、利润等</p>
+        <div class="example-box"><div class="example-title">示例</div>商品款式：<br>商品成本：38元，采用的材料为牛奶丝；二次工艺：XX 辅料XX 等成本包含进去<br>头程：海运成本21元；清关：5元；尾程：USPS运输成本20；仓储：38元；售后：20元；利润：20元</div>
+        <ul class="notice-list" style="margin-top:10px;"><li>所有成本项应该单位一致且和核价单币种单位一致</li><li>申报价请直接填数字，不要带其他格式</li><li>竞品平台/竞品ID类型/竞品ID/相似款链接如有可填写，只填网址链接，没有空着，不要填"无"</li><li class="warning">有重复值/不存在的SKC/申报价高于系统自己填的价格均会拦截申诉导致无法提交</li></ul>
+      </div>
+      <div class="info-card"><h3>竞品ID类型选项</h3><div class="dropdown-options"><span class="option-tag">商品SPU id</span><span class="option-tag">商品SKC id</span><span class="option-tag">商品SKU id</span><span class="option-tag">货品SPU id</span><span class="option-tag">货品SKC id</span><span class="option-tag">货品SKU id</span></div><p style="font-size:12px;color:var(--text-muted);margin-top:8px;">注意：bg(temu)支持货品id类型，其他平台请选择商品ID；竞品平台支持200+平台</p></div>
+      <div class="download-section"><button class="download-btn" onclick="downloadTemplate(currentDim['m1']==='skc'?'price_appeal_skc':'price_appeal')" id="m1-bottom-btn">下载核价申诉模板（<span id="m1-btn-dim">SKC维度</span>）</button><div class="download-hint">点击下载 Excel 模板（含表头、标黄必填项、下拉框验证）</div></div>
+    </div>
+
+    <div class="module" id="m2">
+      <div class="module-header"><h2>灰名单申诉模板</h2></div><div class="module-desc">价格过高被核价灰名单击中，一般表现为没有经过核价直接上架显示流量受限，需要降价解除</div>
+      <div class="summary-bar"><div class="summary-chip"><span class="chip-num">10</span> 列字段</div><div class="summary-chip"><span class="chip-num">5</span> 必填项</div><div class="summary-chip"><span class="chip-num">1000</span> SKU/表上限</div></div>
+      <div class="info-card"><h3>表格字段结构</h3><div class="table-wrapper"><table class="template-table"><thead><tr><th>列</th><th class="required">SKUID</th><th>申诉依据</th><th class="required">是否泛欧品</th><th class="required">站点</th><th>竞品平台</th><th>竞品ID类型</th><th>竞品ID</th><th>相似款链接</th><th class="required">申诉价格</th><th class="required">申诉内容</th></tr></thead><tbody>
+      <tr><td>说明</td><td>货品SKU ID</td><td>下拉框选择</td><td>默认"否"</td><td>如"美国站"</td><td>下拉框选择</td><td>下拉框选择</td><td>竞品ID</td><td>URL链接</td><td>纯数字</td><td>申诉说明，必填</td></tr>
+      <tr><td>必填</td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td></tr>
+      </tbody></table></div></div>
+      <div class="info-card"><h3>注意事项</h3><ul class="notice-list"><li>1000个SKU一个表，多的请分表</li><li class="warning">只能使用SKU ID</li><li class="warning">不要改表头格式</li><li>币种只能选下拉框内容，申诉内容必填</li></ul></div>
+      <div class="info-card"><h3>申诉依据（下拉框选项）</h3><div class="dropdown-options"><span class="option-tag">严格同款</span><span class="option-tag">高度相似款</span><span class="option-tag">相似款</span><span class="option-tag">Y1模式</span><span class="option-tag">Y2模式</span><span class="option-tag">泛欧模式</span><span class="option-tag">成本拆解</span><span class="option-tag">其他</span></div></div>
+      <div class="download-section"><button class="download-btn" onclick="downloadTemplate('greylist_appeal')">下载灰名单申诉模板</button><div class="download-hint">点击下载 Excel 模板（含表头、标黄必填项、下拉框验证）</div></div>
+    </div>
+
+    <div class="module" id="m3">
+      <div class="module-header"><h2>二次核价申诉模板</h2></div><div class="module-desc">修改商品信息后触发二次核价（一般是调整了属性触发，包括标题/图片/Y1Y2模式切换等）</div>
+      <div class="summary-bar"><div class="summary-chip"><span class="chip-num">10</span> 列字段</div><div class="summary-chip"><span class="chip-num">4</span> 必填项</div><div class="summary-chip"><span class="chip-num">100</span> SPU/表上限</div></div>
+      <div class="info-card"><h3>表格字段结构</h3><div class="table-wrapper"><table class="template-table"><thead><tr><th>列</th><th class="required">SKUID</th><th>申诉依据</th><th class="required">站点</th><th>竞品平台</th><th>竞品ID类型</th><th>竞品ID</th><th>竞品链接</th><th>相似款链接</th><th class="required">申诉价格</th><th class="required">申诉内容</th></tr></thead><tbody>
+      <tr><td>说明</td><td>货品SKU ID</td><td>下拉框选择</td><td>站点名称</td><td>下拉框选择</td><td>下拉框选择</td><td>竞品ID</td><td>竞品链接URL</td><td>相似款链接URL</td><td>纯数字</td><td>申诉说明，必填</td></tr>
+      <tr><td>必填</td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-optional">选填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td></tr>
+      </tbody></table></div></div>
+      <div class="info-card"><h3>注意事项</h3><ul class="notice-list"><li>SKU维度，不能超过100个SPU，超过请分表多弄几个表格</li><li class="warning">不可修改表头</li><li>半托填入货品id，服饰类只需要申诉skc下任一sku</li><li>申诉价格请确认与核价单申报币种保持一致，不需要填入货币符号</li><li>仅bg（temu）支持货品id类型，其他平台请选择商品ID</li><li>如需加绑同款，竞品平台必填，竞品ID类型+竞品ID 与 竞品链接 只需选填其一</li><li>id与链接加绑方式不可混用；如采用id加绑，竞品ID类型需全部保持一致</li><li>参考链接/相似款链接，没有就空着，其他星号必填</li></ul></div>
+      <div class="info-card"><h3>申诉依据（下拉框选项）</h3><div class="dropdown-options"><span class="option-tag">严格同款</span><span class="option-tag">高度相似款</span><span class="option-tag">相似款</span><span class="option-tag">Y1模式</span><span class="option-tag">Y2模式</span><span class="option-tag">泛欧模式</span><span class="option-tag">成本拆解</span><span class="option-tag">其他</span></div></div>
+      <div class="info-card"><h3>竞品平台（下拉框选项）</h3><div class="dropdown-options"><span class="option-tag">bg</span><span class="option-tag">pdd</span><span class="option-tag">walmart</span><span class="option-tag">ama</span><span class="option-tag">shein</span><span class="option-tag">1688</span><span class="option-tag">ebay</span><span class="option-tag">etsy</span><span class="option-tag">aliexpress</span><span class="option-tag">kmart</span><span class="option-tag">trademe</span><span class="option-tag">argos</span><span class="option-tag">lidl</span><span class="option-tag">otto</span><span class="option-tag">tesco</span><span class="option-tag">wish</span><span class="option-tag" style="color:#94a3b8">等200+平台</span></div></div>
+      <div class="info-card"><h3>竞品ID类型（下拉框选项）</h3><div class="dropdown-options"><span class="option-tag">商品SPU id</span><span class="option-tag">商品SKC id</span><span class="option-tag">商品SKU id</span><span class="option-tag">货品SPU id</span><span class="option-tag">货品SKC id</span><span class="option-tag">货品SKU id</span></div></div>
+      <div class="download-section"><button class="download-btn" onclick="downloadTemplate('recheck_appeal')">下载二次核价申诉模板</button><div class="download-hint">点击下载 Excel 模板（含表头、标黄必填项、下拉框验证）</div></div>
+    </div>
+
+    <div class="module" id="m4">
+      <div class="module-header"><h2>商品上下架模板（按SKC/SKU）</h2></div><div class="module-desc">商品上架按SKC维度操作，商品下架按SKU维度操作</div>
+      <div class="summary-bar"><div class="summary-chip"><span class="chip-num">2</span> 模板</div><div class="summary-chip"><span class="chip-num">1000</span> SKC上架上限</div><div class="summary-chip"><span class="chip-num">2000</span> SKU下架上限</div></div>
+      <div class="info-card"><h3>上架模板字段结构（按SKC）</h3><div class="table-wrapper"><table class="template-table"><thead><tr><th>列</th><th class="required">货品SKC</th><th class="required">备注</th></tr></thead><tbody>
+      <tr><td>说明</td><td>SKC ID</td><td>必填，不可为空</td></tr>
+      <tr><td>必填</td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td></tr>
+      </tbody></table></div><ul class="notice-list" style="margin-top:12px;"><li class="warning">不可修改表头</li><li>上架最大可放1000个SKC</li><li class="warning">备注不可为空</li></ul></div>
+      <div class="info-card"><h3>下架模板字段结构（按SKU）</h3><div class="table-wrapper"><table class="template-table"><thead><tr><th>列</th><th class="required">货品SKU</th><th class="required">下架原因</th><th class="required">备注</th></tr></thead><tbody>
+      <tr><td>说明</td><td>SKU ID</td><td>下拉框选择</td><td>必填，不可为空</td></tr>
+      <tr><td>必填</td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td></tr>
+      </tbody></table></div><ul class="notice-list" style="margin-top:12px;"><li class="warning">不可修改表头</li><li>下架最大可放2000个SKU</li><li class="warning">下架原因只能用下拉框选项</li><li class="warning">备注不可为空</li></ul></div>
+      <div class="info-card"><h3>下架原因（下拉框选项）</h3><div class="dropdown-options"><span class="option-tag">卖家停产/无货</span><span class="option-tag">认证资质问题</span><span class="option-tag">申报价格无优势</span><span class="option-tag">节日品下架</span><span class="option-tag">换季品下架</span><span class="option-tag">其他</span></div></div>
+      <div class="download-section"><button class="download-btn" onclick="downloadTemplate('shelf_on')">下载上架模板</button><button class="download-btn" onclick="downloadTemplate('shelf_off')" style="margin-left:12px;">下载下架模板</button><div class="download-hint">点击下载对应 Excel 模板（含表头、下拉框验证）</div></div>
+    </div>
+
+    <div class="module" id="m5">
+      <div class="module-header"><h2>市场推广提报</h2></div><div class="module-desc">每周四一次提报推流品，满足以下要求有可能被市场选中推流</div>
+      <div class="summary-bar"><div class="summary-chip"><span class="chip-num">4</span> 列字段</div><div class="summary-chip"><span class="chip-num">周四</span> 提报周期</div></div>
+      <div class="info-card"><h3>表格字段结构</h3><div class="table-wrapper"><table class="template-table"><thead><tr><th>列</th><th class="required">日期</th><th class="required">SPUID</th><th class="required">卖点（风格、元素、给款的原因）</th><th class="required">主销市场（美区/欧区）</th></tr></thead><tbody>
+      <tr><td>说明</td><td>提报日期</td><td>商品SPU ID</td><td>商品卖点描述</td><td>美区 或 欧区</td></tr>
+      <tr><td>必填</td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td><td><span class="tag tag-required">必填</span></td></tr>
+      </tbody></table></div></div>
+      <div class="info-card"><h3>提报要求</h3><div class="requirement-grid"><div class="requirement-card"><div class="req-title">广告条件</div><div class="req-value">广告可投 + 无广告/30天未投</div></div><div class="requirement-card"><div class="req-title">商品评分</div><div class="req-value">>= 4.5分 或 无评分</div></div><div class="requirement-card"><div class="req-title">商品库存</div><div class="req-value">>= 50</div></div></div></div>
+      <div class="info-card"><h3>市场优先偏好</h3><ul class="notice-list"><li>优先<strong>精品高销品</strong></li><li>优先<strong>有站内视频</strong>的商品</li><li>优先<strong>站内图/视频特别漂亮有吸引力</strong>的商品</li></ul></div>
+      <div class="info-card"><h3>提报流程</h3><ul class="notice-list"><li><strong>第一步</strong>：在商品列表/上新生命周期筛选对应站点广告可投，且对应站点无广告/30天未投的商品</li><li><strong>第二步</strong>：确认商品评分 >= 4.5分 或 无评分</li><li><strong>第三步</strong>：确认商品库存 >= 50</li><li><strong>第四步</strong>：填写提报表格（日期、SPUID、卖点、主销市场）</li><li class="info">每周四提交，等待市场筛选选中推流</li></ul></div>
+      <div class="download-section"><button class="download-btn" onclick="downloadTemplate('market_promo')">下载市场推广提报模板</button><div class="download-hint">点击下载 Excel 模板（含表头格式）</div></div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+function scrollToDownload() {
+  var target = document.querySelector('.quick-download');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.remove('highlight');
+    void target.offsetWidth;
+    target.classList.add('highlight');
+    setTimeout(function() { target.classList.remove('highlight'); }, 2000);
+  }
+}
+var currentDim = { 'm1': 'skc' };
+function switchDimension(moduleId, dim) {
+  currentDim[moduleId] = dim;
+  var skuTable = document.getElementById(moduleId + '-table-sku');
+  var skcTable = document.getElementById(moduleId + '-table-skc');
+  var titleSpan = document.getElementById(moduleId + '-table-title');
+  var dimLabel = document.getElementById(moduleId + '-dim-label');
+  var btnDim = document.getElementById(moduleId + '-btn-dim');
+  var btns = document.querySelectorAll('#' + moduleId + ' .dim-btn');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  if (dim === 'sku') {
+    if (skuTable) skuTable.style.display = '';
+    if (skcTable) skcTable.style.display = 'none';
+    if (titleSpan) titleSpan.textContent = '（SKU维度）';
+    if (dimLabel) dimLabel.textContent = 'SKU';
+    if (btnDim) btnDim.textContent = 'SKU维度';
+    if (btns[0]) btns[0].classList.add('active');
+  } else {
+    if (skuTable) skuTable.style.display = 'none';
+    if (skcTable) skcTable.style.display = '';
+    if (titleSpan) titleSpan.textContent = '（SKC维度）';
+    if (dimLabel) dimLabel.textContent = 'SKC';
+    if (btnDim) btnDim.textContent = 'SKC维度';
+    if (btns[1]) btns[1].classList.add('active');
+  }
+}
+function toggleQdExpand(id) {
+  var el = document.getElementById(id);
+  if (el) { el.style.display = el.style.display === 'none' ? 'flex' : 'none'; }
+}
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById(item.dataset.target).classList.add('active');
+    if (window.innerWidth <= 768) { document.querySelector('.content').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+function createWorksheet(headers, validations) {
+  var ws_data = [headers];
+  var ws = XLSX.utils.aoa_to_sheet(ws_data);
+  var colWidths = headers.map(function(h) { return { wch: Math.max(String(h).length * 2 + 4, 14) }; });
+  ws['!cols'] = colWidths;
+  if (validations) {
+    for (var col in validations) {
+      ws['!dataValidations'] = ws['!dataValidations'] || [];
+      ws['!dataValidations'].push({ sqref: XLSX.utils.encode_cell({ r: 1, c: parseInt(col) }) + ':' + XLSX.utils.encode_cell({ r: 2000, c: parseInt(col) }), type: 'list', formula1: '"' + validations[col].join(',') + '"', allowBlank: true });
+    }
+  }
+  return ws;
+}
+function fillYellow(ws, headers, requiredCols) {
+  for (var i = 0; i < headers.length; i++) {
+    if (requiredCols.indexOf(i) >= 0) {
+      var cellRef = XLSX.utils.encode_cell({ r: 0, c: i });
+      if (ws[cellRef]) { ws[cellRef].s = { fill: { fgColor: { rgb: 'FFFF3CD' } }, font: { bold: true } }; }
+    }
+  }
+}
+function downloadTemplate(type) {
+  var wb, ws, headers, validations, requiredCols;
+  switch(type) {
+    case 'price_appeal':
+      headers = ['*SKUID', '*是否泛欧品', '*站点', '申诉依据', '竞品平台', '竞品ID类型', '竞品ID', '竞品链接', '相似款链接', '*申诉价格', '*申诉内容'];
+      validations = { 1: ['是','否'], 3: ['成本拆解','严格同款','高度相似款','相似款','Y1模式','Y2模式','泛欧模式','其他'], 4: ['bg','pdd','walmart','ama','shein','ebay','aliexpress','wish','wayfair','etsy','target','costco','homedepot','lowes','jd','taobao','tmall','1688','dhgate','alibaba'], 5: ['商品SPU id','商品SKC id','商品SKU id','货品SPU id','货品SKC id','货品SKU id'] };
+      requiredCols = [0,1,2,9,10]; ws = createWorksheet(headers, validations); fillYellow(ws, headers, requiredCols);
+      wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '核价申诉'); XLSX.writeFile(wb, '核价申诉模板.xlsx', { cellStyles: true }); break;
+    case 'price_appeal_skc':
+      headers = ['*SKCID', '*是否泛欧品', '*站点', '申诉依据', '竞品平台', '竞品ID类型', '竞品ID', '竞品链接', '相似款链接', '*申诉价格', '*申诉内容'];
+      validations = { 1: ['是','否'], 3: ['成本拆解','严格同款','高度相似款','相似款','Y1模式','Y2模式','泛欧模式','其他'], 4: ['bg','pdd','walmart','ama','shein','ebay','aliexpress','wish','wayfair','etsy','target','costco','homedepot','lowes','jd','taobao','tmall','1688','dhgate','alibaba'], 5: ['商品SPU id','商品SKC id','商品SKU id','货品SPU id','货品SKC id','货品SKU id'] };
+      requiredCols = [0,1,2,9,10]; ws = createWorksheet(headers, validations); fillYellow(ws, headers, requiredCols);
+      wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '核价申诉'); XLSX.writeFile(wb, '核价申诉模板（SKC维度）.xlsx', { cellStyles: true }); break;
+    case 'greylist_appeal':
+      headers = ['*SKUID','申诉依据','*是否泛欧品','*站点','竞品平台','竞品ID类型','竞品ID','相似款链接','*申诉价格','*申诉内容'];
+      validations = { 1: ['严格同款','高度相似款','相似款','Y1模式','Y2模式','泛欧模式','成本拆解','其他'], 2: ['是','否'], 4: ['bg','pdd','walmart','ama','shein','ebay','aliexpress','wish','wayfair','etsy','target','costco','homedepot','lowes','jd','taobao','tmall','1688','dhgate','alibaba'], 5: ['商品SPU id','商品SKC id','商品SKU id','货品SPU id','货品SKC id','货品SKU id'] };
+      requiredCols = [0,2,3,8,9]; ws = createWorksheet(headers, validations); fillYellow(ws, headers, requiredCols);
+      wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '灰名单申诉'); XLSX.writeFile(wb, '灰名单申诉模板.xlsx', { cellStyles: true }); break;
+    case 'recheck_appeal':
+      headers = ['*SKUID','申诉依据','*站点','竞品平台','竞品ID类型','竞品ID','竞品链接','相似款链接','*申诉价格','*申诉内容'];
+      validations = { 1: ['严格同款','高度相似款','相似款','Y1模式','Y2模式','泛欧模式','成本拆解','其他'], 3: ['bg','pdd','walmart','ama','shein','1688','ebay','etsy','aliexpress','kmart','trademe','argos','lidl','otto','tesco','wish'], 4: ['商品SPU id','商品SKC id','商品SKU id','货品SPU id','货品SKC id','货品SKU id'] };
+      requiredCols = [0,2,8,9]; ws = createWorksheet(headers, validations); fillYellow(ws, headers, requiredCols);
+      wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '二次核价申诉'); XLSX.writeFile(wb, '半托-oms二次核价申诉批量导入模板.xlsx', { cellStyles: true }); break;
+    case 'shelf_on':
+      headers = ['货品SKC','备注']; ws = createWorksheet(headers, null);
+      wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '上架'); XLSX.writeFile(wb, '上架（类目）.xlsx', { cellStyles: true }); break;
+    case 'shelf_off':
+      headers = ['货品SKU','下架原因','备注']; validations = { 1: ['卖家停产/无货','认证资质问题','申报价格无优势','节日品下架','换季品下架','其他'] };
+      ws = createWorksheet(headers, validations); wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '下架'); XLSX.writeFile(wb, '下架（类目）.xlsx', { cellStyles: true }); break;
+    case 'market_promo':
+      headers = ['日期','SPUID','卖点（风格、元素、给款的原因）','主销市场（美区/欧区）']; ws = createWorksheet(headers, null);
+      wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '市场推广提报'); XLSX.writeFile(wb, '市场推广提报模板.xlsx', { cellStyles: true }); break;
+  }
+}
+</script>
+</body>
+</html>
